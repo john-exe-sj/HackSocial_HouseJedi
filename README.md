@@ -85,6 +85,7 @@ This project is designed to assist housing developers by providing relevant info
 - Ensure all dependencies are installed correctly.
 - Verify that the `.env` file contains the correct API keys and model names.
 - Check that the `data` directory is not empty and contains valid `.docx` files.
+- Generation of the `.db/` directory should not take longer than 10 minutes. Directory `./db` serves as our vector store to contain chunked data for llm processing. 
 
 ## License
 
