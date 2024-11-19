@@ -1,4 +1,4 @@
-from .rag import (
+from .RAG import (
     split_documents,
     get_embedding_model,
     get_relevant_documents,
