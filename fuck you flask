@@ -1,0 +1,24 @@
+import chromadb
+from flask import Flask
+
+app = Flask(__name__)
+
+# Create a Chroma client singleton
+def get_chroma_client():
+    if not hasattr(app, 'chroma_client'):
+        app.chroma_client = chromadb.Client()
+    return app.chroma_client
+
+@app.route('/')
+def hello_world():
+    client = get_chroma_client()
+    # Use the client to interact with Chromadb
+    collection = client.get_collection("my_collection")
+    results = collection.query(
+        query_texts=["This is a query document about hawaii"],
+        n_results=2 
+    )
+    return str(results)
+
+if __name__ == '__main__':
+    app.run(debug=True)

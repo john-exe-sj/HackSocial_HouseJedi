@@ -30,5 +30,6 @@ build/
 
 # Ignore the db directory
 db/*
+flask_session/
 
 .DS_Store
