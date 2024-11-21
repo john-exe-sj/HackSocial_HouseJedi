@@ -2,6 +2,8 @@ from flask import Flask, request, session
 from flask_session import Session
 from flask_socketio import join_room, leave_room, send, SocketIO
 
+from src.LanguageModel import OllamaClient
+
 import os
 import os
 from dotenv import load_dotenv
@@ -18,11 +20,12 @@ socket = SocketIO(app, manage_session=False)
 @app.route("/", methods=["POST"])
 def home(): 
     if request.method == "POST":
-        jurisdictions = request.args.getlist("jurisdictions")
-        print(jurisdictions)
+        jurisdictions = list(map(lambda jurisdiction: jurisdiction.replace("_", " "), request.args.getlist("jurisdictions")))
+        jurisdictions_room_addr = "chat_room_" + "".join(request.args.getlist("jurisdictions"))
+        #session[jurisdiction_room_addr] = {"chatbot": OllamaClient(jurisdictions), "messages": []}
+        print(jurisdictions_room_addr)
     return f"<p>Hello, World!</p>"
 
 
 if __name__ == "__main__":
     socket.run(app, port=8000, debug=True)
-    session["chatbox-jurisdiction-topics"] = []

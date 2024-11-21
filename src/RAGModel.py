@@ -25,7 +25,6 @@ logging.basicConfig(
     ]
 )
 
-
 def split_documents(documents: list[Document]) -> list[Document]:
     """Splits documents into smaller chunks."""
     if not documents:

@@ -2,6 +2,8 @@ from langchain_ollama import OllamaLLM
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.document import Document
 
+from src.RAGModel import get_relevant_documents, initialize_db
+
 import os
 from dotenv import load_dotenv
 from datetime import datetime
@@ -23,11 +25,18 @@ logging.basicConfig(
 
 class OllamaClient(): 
 
-    def __init__(self): 
+    def __init__(self, list_of_cities: list[str]): 
         self.llm = OllamaLLM(model=os.getenv("LLM_MODEL_NAME"))
+        try: 
+            self.db = initialize_db()
+        except RuntimeError as e: 
+            logging.error(e)
+        self.context = get_relevant_documents(list_of_cities, self.db)
+        self.list_of_cities = list_of_cities
 
-    async def inquire_cities(self, list_of_cities: list[str], context:list[Document], prompt:str) -> Coroutine[Any, Any, str]: 
+    async def inquire_cities(self, prompt:str) -> Coroutine[Any, Any, str]: 
         """inquires llm given a list of cities, context and a client's prompt."""
+
         FINAL_PROMPT_TEMPLATE = """
         You are a chat robot meant to assist housing developers. If at any point you cannot find the information
         with the provided documents, do not mention that to the housing developer you are assisting. Only give
@@ -39,11 +48,11 @@ class OllamaClient():
         """
 
         prompt_template = ChatPromptTemplate.from_template(FINAL_PROMPT_TEMPLATE)  # Assembling prompt from template
-        final_prompt = prompt_template.format(cities=list_of_cities, context=context, prompt=prompt)
+        final_prompt = prompt_template.format(cities=self.list_of_cities, context=self.context, prompt=prompt)
 
         # Record the start time
         start_time = time.time()
-        logging.info(f"Starting inquiry for cities: {list_of_cities} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logging.info(f"Starting inquiry for cities: {self.list_of_cities} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
         # Perform the inquiry
         response = await self.llm.ainvoke(final_prompt)
@@ -51,6 +60,6 @@ class OllamaClient():
         # Record the end time and calculate the duration
         end_time = time.time()
         duration = end_time - start_time
-        logging.info(f"Completed inquiry for cities: {list_of_cities} in {duration:.2f} seconds")
+        logging.info(f"Completed inquiry for cities: {self.list_of_cities} in {duration:.2f} seconds")
 
         return response
