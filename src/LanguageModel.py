@@ -1,8 +1,8 @@
 from langchain_ollama import OllamaLLM
 from langchain.prompts import ChatPromptTemplate
-from langchain.schema.document import Document
+from langchain_chroma import Chroma
 
-from src.RAGModel import get_relevant_documents, initialize_db
+from src.RAGModel import get_relevant_documents
 
 import os
 from dotenv import load_dotenv
@@ -10,6 +10,7 @@ from datetime import datetime
 import time
 import logging
 from typing import Coroutine, Any  # Add this import
+
 
 load_dotenv()
 
@@ -25,16 +26,11 @@ logging.basicConfig(
 
 class OllamaClient(): 
 
-    def __init__(self, list_of_cities: list[str]): 
+    def __init__(self, db: Chroma): 
         self.llm = OllamaLLM(model=os.getenv("LLM_MODEL_NAME"))
-        try: 
-            self.db = initialize_db()
-        except RuntimeError as e: 
-            logging.error(e)
-        self.context = get_relevant_documents(list_of_cities, self.db)
-        self.list_of_cities = list_of_cities
+        self.db = db
 
-    async def inquire_cities(self, prompt:str) -> Coroutine[Any, Any, str]: 
+    async def inquire_cities(self, list_of_cities: list[str],  prompt:str) -> Coroutine[Any, Any, str]: 
         """inquires llm given a list of cities, context and a client's prompt."""
 
         FINAL_PROMPT_TEMPLATE = """
@@ -48,11 +44,15 @@ class OllamaClient():
         """
 
         prompt_template = ChatPromptTemplate.from_template(FINAL_PROMPT_TEMPLATE)  # Assembling prompt from template
-        final_prompt = prompt_template.format(cities=self.list_of_cities, context=self.context, prompt=prompt)
+        final_prompt = prompt_template.format(
+            cities=', '.join(list_of_cities), 
+            context=get_relevant_documents(list_of_cities, self.db), 
+            prompt=prompt
+        )
 
         # Record the start time
         start_time = time.time()
-        logging.info(f"Starting inquiry for cities: {self.list_of_cities} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logging.info(f"Starting inquiry for cities: {list_of_cities} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
         # Perform the inquiry
         response = await self.llm.ainvoke(final_prompt)
