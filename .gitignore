@@ -1,62 +1,92 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# Byte-compiled files
+# Python
 __pycache__/
 *.py[cod]
-
-# Distribution / packaging
+*.so
 .Python
-env/
-.venv/
-ENV/
-env.bak/
-venv.bak/
+*.egg
 *.egg-info/
 dist/
 build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
 
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# Logs
-*.log
-
-# Environment variables
-.env
-
-# Ignore the db directory
-db
+# Flask
+instance/
 flask_session/
+.webassets-cache
 
-# Ignore data directory
-data/
-
-.DS_Store
-
-# dependencies
-node_modules
-/.pnp
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
 .pnp.js
 
-# testing
-/coverage
+# Testing
+coverage/
+.coverage
+.tox/
+nosetests.xml
+htmlcov/
 
-# production
-/build
+# Production Build
+build/
+dist/
+*.min.js
+*.min.css
 
-# misc
-.DS_Store
+# Development
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Database
+*.sqlite
+*.sqlite3
+*.db
+db/
+
+# Logs
+*.log
+logs/
+
+# IDE and Editor Files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project Specific
+data/
