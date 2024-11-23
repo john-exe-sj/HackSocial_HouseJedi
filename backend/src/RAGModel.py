@@ -20,7 +20,7 @@ logging.basicConfig(
     level=logging.INFO,  # Set the logging level
     format='%(asctime)s - %(levelname)s - %(message)s',  # Set the format for log messages
     handlers=[
-        logging.FileHandler("app.log"),  # Log to a file
+        logging.FileHandler("./backend_app.log"),  # Log to a file with the desired name
         logging.StreamHandler()  # Also log to console
     ]
 )
@@ -67,8 +67,8 @@ def is_directory_empty(directory_path: str) -> bool:
 
 def initialize_db() -> Chroma:
     """Initializes the database by loading documents and creating the database if necessary."""
-    directory_data_path = os.path.abspath("./data")
-    directory_db_path = os.path.abspath("./db")
+    directory_data_path = os.path.abspath("./backend/data")
+    directory_db_path = os.path.abspath("./backend/db")
 
     # Create the database directory if it doesn't exist
     os.makedirs(directory_db_path, exist_ok=True)

@@ -5,7 +5,7 @@ This project is designed to assist housing developers by providing relevant info
 ## Prerequisites
 
 - Python 3.8 or higher
-- Virtual environment tool (e.g., `venv` or `virtualenv`)
+- Virtual environment tool (e.g., `venv` or `virtualenv`) in the root directory of this repository.
 - Access to the internet for downloading dependencies
 
 ## Setup Instructions

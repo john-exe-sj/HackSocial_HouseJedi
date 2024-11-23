@@ -19,7 +19,7 @@ logging.basicConfig(
     level=logging.INFO,  # Set the logging level
     format='%(asctime)s - %(levelname)s - %(message)s',  # Set the format for log messages
     handlers=[
-        logging.FileHandler("app.log"),  # Log to a file
+        logging.FileHandler("./backend_app.log"),  # Log to a file with the desired name
         logging.StreamHandler()  # Also log to console
     ]
 )
