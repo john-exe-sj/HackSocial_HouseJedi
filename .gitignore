@@ -32,4 +32,7 @@ build/
 db/*
 flask_session/
 
+# Ignore data directory
+data/*
+
 .DS_Store

@@ -1,6 +1,6 @@
 # HackSocial HouseJedi
 
-This project is designed to assist housing developers by providing relevant information from a database of documents. The application uses a language model to answer questions based on the context of the documents.
+This project is designed to assist housing developers by providing relevant information from a database of documents. The application uses a language model to answer questions based on the context of the documents. For more information regarding this event, visit: https://pages.pagesuite.com/8/a/8aa600ba-1bca-4098-913d-93b6aa7ab300/page.pdf
 
 ## Prerequisites
 
