@@ -30,7 +30,7 @@ class OllamaClient():
         self.llm = OllamaLLM(model=os.getenv("LLM_MODEL_NAME"))
         self.db = db
 
-    async def inquire_cities(self, list_of_cities: list[str],  prompt:str) -> Coroutine[Any, Any, str]: 
+    def inquire_cities(self, list_of_cities: list[str],  prompt:str) -> Coroutine[Any, Any, str]: 
         """inquires llm given a list of cities, context and a client's prompt."""
 
         FINAL_PROMPT_TEMPLATE = """
@@ -55,7 +55,7 @@ class OllamaClient():
         logging.info(f"Starting inquiry for cities: {list_of_cities} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
         # Perform the inquiry
-        response = await self.llm.ainvoke(final_prompt)
+        response = self.llm.invoke(final_prompt)
 
         # Record the end time and calculate the duration
         end_time = time.time()

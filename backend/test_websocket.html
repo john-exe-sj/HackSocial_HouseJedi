@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask-SocketIO Test</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Flask-SocketIO Test</h1>
+    <script>
+        // Connect to the Flask-SocketIO server
+        const socket = io('http://127.0.0.1:8000'); // Update the URL if needed
+
+        // Listen for the connection event
+        socket.on('connect', () => {
+            console.log('Connected to Flask-SocketIO server');
+            socket.emit('first_event', {jurisdiction: ["Daly City", "San Jose", "Alameda"], prompt: "What can you tell me about San Jose's building codes?"})
+            console.log("sent")
+        });
+
+
+        // Listen for messages from the server
+        socket.on('first_event', () => {
+            socket.send(["Daly_City", "San_Jose"], "Hello World")
+        });
+
+        // Handle connection errors
+        socket.on('connect_error', (err) => {
+            console.error('Connection error:', err);
+        });
+
+        // Handle disconnections
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+    </script>
+</body>
+</html>
