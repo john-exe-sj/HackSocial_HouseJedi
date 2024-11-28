@@ -88,7 +88,7 @@ def initialize_db() -> Chroma:
 
     start_time = time.time()
     logging.info(f"Loading documents at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    documents = loader.lazy_load() # Load documents without splitting
+    documents = loader.lazy_load() # Load documents without splitting and load them only when needed. 
     logging.info("Documents loaded.")
 
     logging.info("Initializing database...")
