@@ -60,6 +60,6 @@ class OllamaClient():
         # Record the end time and calculate the duration
         end_time = time.time()
         duration = end_time - start_time
-        logging.info(f"Completed inquiry for cities: {self.list_of_cities} in {duration:.2f} seconds")
+        logging.info(f"Completed inquiry for cities: {list_of_cities} in {duration:.2f} seconds")
 
         return response

@@ -67,8 +67,12 @@ def is_directory_empty(directory_path: str) -> bool:
 
 def initialize_db() -> Chroma:
     """Initializes the database by loading documents and creating the database if necessary."""
-    directory_data_path = os.path.abspath("./backend/data")
-    directory_db_path = os.path.abspath("./backend/db")
+    directory_data_path = os.path.abspath("./data")
+    directory_db_path = os.path.abspath("./db")
+    
+    # Check if there are any files in the directory
+    if not any(os.path.isfile(os.path.join(directory_data_path, f)) for f in os.listdir(directory_data_path)):
+        raise FileNotFoundError(f"No data files found in directory: {directory_data_path}")
 
     # Create the database directory if it doesn't exist
     os.makedirs(directory_db_path, exist_ok=True)
@@ -84,7 +88,7 @@ def initialize_db() -> Chroma:
 
     start_time = time.time()
     logging.info(f"Loading documents at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    documents = loader.lazy_load()  # Load documents without splitting
+    documents = loader.lazy_load() # Load documents without splitting
     logging.info("Documents loaded.")
 
     logging.info("Initializing database...")
