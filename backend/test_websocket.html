@@ -15,10 +15,10 @@
         // Listen for the connection event
         socket.on('connect', () => {
             console.log('Connected to Flask-SocketIO server');
-            socket.emit('first_event', {jurisdiction: ["Daly City", "San Jose", "Alameda"], prompt: "What can you tell me about San Jose's building codes?"})
-            console.log("sent")
         });
 
+        // emitting messages to the flask server. 
+        socket.emit('query_llm', {jurisdiction: ["Daly City", "San Jose", "Alameda"], prompt: "What can you tell me about San Jose's building codes?"})
 
         // Listen for messages from the server
         socket.on('first_event', (data) => {

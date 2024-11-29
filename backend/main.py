@@ -30,13 +30,10 @@ async def home():
         session[jurisdictions_room_addr] = {"jurisdictions": jurisdictions, "messages": []}
     return f"<p>Hello, World!</p>"
 
-@socket.on("first_event")
-def handle_first_event(data): 
-    #print(data, "Here")
+@socket.on("query_llm")
+def handle_query(data): 
     response = llm_client.inquire_cities(data["jurisdiction"], data["prompt"])
-    #print("Hi")
     socket.emit(event="first_event", data=response)
-    #send(response)
-
+    
 if __name__ == "__main__":
     socket.run(app, port=8000, debug=True)
