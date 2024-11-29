@@ -30,7 +30,7 @@ class OllamaClient():
         self.llm = OllamaLLM(model=os.getenv("LLM_MODEL_NAME"))
         self.db = db
 
-    def inquire_cities(self, list_of_cities: list[str],  prompt:str) -> Coroutine[Any, Any, str]: 
+    def inquire_on_jurisdictions(self, list_of_cities: list[str],  prompt:str) -> str: 
         """inquires llm given a list of cities, context and a client's prompt."""
 
         FINAL_PROMPT_TEMPLATE = """

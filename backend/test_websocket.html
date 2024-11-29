@@ -18,10 +18,13 @@
         });
 
         // emitting messages to the flask server. 
-        socket.emit('query_llm', {jurisdiction: ["Daly City", "San Jose", "Alameda"], prompt: "What can you tell me about San Jose's building codes?"})
+        socket.emit('query_llm', {
+            jurisdiction: ["Daly City", "San Jose", "Alameda"], 
+            prompt: "What can you tell me about San Jose's building codes?"
+        }); 
 
         // Listen for messages from the server
-        socket.on('first_event', (data) => {
+        socket.on('llm_response', (data) => {
             console.log(data); 
         });
 
