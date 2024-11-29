@@ -1,6 +1,6 @@
 from flask import Flask, request, session
 from flask_session import Session
-from flask_socketio import join_room, leave_room, send, SocketIO
+from flask_socketio import join_room, leave_room, send, SocketIO, emit
 from flask_cors import CORS
 
 from src.LanguageModel import OllamaClient
@@ -35,7 +35,7 @@ def handle_first_event(data):
     #print(data, "Here")
     response = llm_client.inquire_cities(data["jurisdiction"], data["prompt"])
     #print("Hi")
-    print(response)
+    socket.emit(event="first_event", data=response)
     #send(response)
 
 if __name__ == "__main__":

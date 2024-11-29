@@ -10,7 +10,7 @@
     <h1>Flask-SocketIO Test</h1>
     <script>
         // Connect to the Flask-SocketIO server
-        const socket = io('http://127.0.0.1:8000'); // Update the URL if needed
+        const socket = io('http://127.0.0.1:8000', ); // Update the URL if needed
 
         // Listen for the connection event
         socket.on('connect', () => {
@@ -21,8 +21,8 @@
 
 
         // Listen for messages from the server
-        socket.on('first_event', () => {
-            socket.send(["Daly_City", "San_Jose"], "Hello World")
+        socket.on('first_event', (data) => {
+            console.log(data); 
         });
 
         // Handle connection errors
