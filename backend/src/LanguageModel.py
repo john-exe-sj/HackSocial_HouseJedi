@@ -9,8 +9,6 @@ from dotenv import load_dotenv
 from datetime import datetime
 import time
 import logging
-from typing import Coroutine, Any  # Add this import
-
 
 load_dotenv()
 
@@ -33,6 +31,7 @@ class OllamaClient():
     def inquire_on_jurisdictions(self, list_of_cities: list[str],  prompt:str) -> str: 
         """inquires llm given a list of cities, context and a client's prompt."""
 
+        # the skeleton of the question
         FINAL_PROMPT_TEMPLATE = """
         You are a chat robot meant to assist housing developers. If at any point you cannot find the information
         with the provided documents, do not mention that to the housing developer you are assisting. Only give
@@ -54,7 +53,7 @@ class OllamaClient():
         start_time = time.time()
         logging.info(f"Starting inquiry for cities: {list_of_cities} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-        # Perform the inquiry
+        # Perform the inquiry, llm answering the question.
         response = self.llm.invoke(final_prompt)
 
         # Record the end time and calculate the duration
